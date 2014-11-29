@@ -25,7 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>rotSpeed = -8;
+            <string>/// Initialize variables
+
+rotSpeed = -8;
 xSpeed = 15;
 scored = false;
 
@@ -52,15 +54,22 @@ image_speed = 0.5;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_angle += rotSpeed;
+            <string>/// Update loop
 
-if (room == rm_tutorial_2) exit;
+if (obj_control.paused) exit;
+
+// Spinning
+image_angle += rotSpeed;
+
+// Prevent the chairs from moving if they're on the tutorial screen
+if (room != rm_game) exit;
 
 x += xSpeed;
 
 // Scoring
 if !obj_control.gameOver &amp;&amp; !scored &amp;&amp; x - sprite_width / 2 &gt; obj_player.x + obj_player.sprite_width / 2 {
     scored = true;
+    if (!obj_control.mute) audio_play_sound(snd_score, 0, false);
     score++;
 }
 </string>
@@ -85,7 +94,9 @@ if !obj_control.gameOver &amp;&amp; !scored &amp;&amp; x - sprite_width / 2 &gt;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (x &gt; 0) instance_destroy();
+            <string>/// Destroy the instance if it's to the right of the room
+
+if (x &gt; 0) instance_destroy();
 </string>
           </argument>
         </arguments>

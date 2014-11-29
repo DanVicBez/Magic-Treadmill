@@ -3,7 +3,7 @@
   <spriteName>spr_button</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-10</depth>
   <persistent>0</persistent>
   <parentName>obj_button</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -50,7 +50,7 @@ game_end();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if obj_start.clicked {
+            <string>if room == rm_main_menu &amp;&amp; obj_start.clicked {
     vspeed += 0.8;
 }
 </string>

@@ -71,7 +71,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>audio_play_sound(snd_click, 0, false);
+            <string>/// Play the click sound
+
+if (!obj_control.mute) audio_play_sound(snd_click, 0, false);
 </string>
           </argument>
         </arguments>

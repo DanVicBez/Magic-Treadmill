@@ -162,13 +162,9 @@ obj_control.drawScore = true;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Go to the game room or the tutorial
+            <string>/// Go to the game room
 
-if !file_exists('highscore.dat') {
-    room_goto(rm_tutorial_1);
-} else {
-    room_goto(rm_game);
-}
+room_goto(rm_game);
 </string>
           </argument>
         </arguments>

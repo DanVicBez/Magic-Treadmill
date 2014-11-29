@@ -8,6 +8,7 @@
     <sound>sound\snd_music</sound>
     <sound>sound\snd_gameover</sound>
     <sound>sound\snd_click</sound>
+    <sound>sound\snd_score</sound>
   </sounds>
   <sprites name="sprites">
     <sprite>sprites\spr_player</sprite>
@@ -17,6 +18,8 @@
     <sprite>sprites\spr_start</sprite>
     <sprite>sprites\spr_button</sprite>
     <sprite>sprites\spr_button_hover</sprite>
+    <sprite>sprites\spr_background</sprite>
+    <sprite>sprites\spr_mute</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -35,14 +38,18 @@
     <object>objects\obj_title</object>
     <object>objects\obj_gui</object>
     <object>objects\obj_game_over</object>
-    <objects name="buttons">
+    <objects name="Buttons">
       <object>objects\obj_exit</object>
+      <object>objects\obj_tutorial</object>
       <object>objects\obj_retry</object>
       <object>objects\obj_about</object>
       <object>objects\obj_button</object>
       <object>objects\obj_main_menu</object>
       <object>objects\obj_start</object>
     </objects>
+    <object>objects\obj_screen_shake</object>
+    <object>objects\obj_background</object>
+    <object>objects\obj_mute</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_main_menu</room>
@@ -50,6 +57,7 @@
     <room>rooms\rm_about</room>
     <room>rooms\rm_tutorial_1</room>
     <room>rooms\rm_tutorial_2</room>
+    <room>rooms\rm_tutorial_3</room>
   </rooms>
   <constants number="2">
     <constant name="GM_build_date">41965.2177753009</constant>

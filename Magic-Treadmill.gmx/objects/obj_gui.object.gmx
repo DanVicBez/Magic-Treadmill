@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-9</depth>
   <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -90,6 +90,17 @@ if room == rm_main_menu {
     draw_text(room_width / 2, yScore + 40, 'Highscore: ' + string(global.highScore));
 }
 
+// Pause menu
+if obj_control.paused {
+    draw_set_alpha(0.5);
+    draw_rectangle_colour(0, 0, room_width, room_height, c_black, c_black, c_black, c_black, false);
+    draw_set_alpha(1); 
+    
+    draw_set_font(fnt_silkscreen_48);
+    draw_set_colour(c_white);
+    draw_text(room_width / 2, 200, 'PAUSED');      
+}
+
 if room == rm_tutorial_1 { // Tutorial 1
     draw_set_font(fnt_silkscreen_48);
     draw_text(room_width / 2, 100, 'This is you.');
@@ -107,6 +118,18 @@ if room == rm_tutorial_1 { // Tutorial 1
     draw_text(room_width / 2, 600, 'Avoid them at all costs.');
     
     draw_set_font(fnt_silkscreen_20);
+    draw_text(room_width / 2, room_height - 50, 'Press Enter to continue');
+} else if room == rm_tutorial_3 { //Tutorial 3
+    draw_set_font(fnt_silkscreen_48);    
+    draw_text(room_width / 2, 100, 'CONTROLS');
+    
+    draw_set_font(fnt_silkscreen_24);
+    draw_text(room_width / 2, 500, 'Mouse: move the player' +
+    '#P: pause the game' + 
+    '#M: mute all sounds (not music)' + 
+    '#X: close the game');
+    
+    draw_set_font(fnt_silkscreen_20);    
     draw_text(room_width / 2, room_height - 50, 'Press Enter to continue');
 }
 </string>

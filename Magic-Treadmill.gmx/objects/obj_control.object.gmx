@@ -27,8 +27,11 @@
             <kind>1</kind>
             <string>/// Initialize variables
 
+alarmTime = 0;
 gameOver = false;
 drawScore = false;
+paused = false;
+mute = false;
 
 // Get highscore from the file
 if file_exists('highscore.dat') {
@@ -61,7 +64,9 @@ if file_exists('highscore.dat') {
             <kind>1</kind>
             <string>/// Spawn a new chair
 
-var height = obj_chair.sprite_height * 2;
+if (paused) exit;
+
+var height = spr_chair.sprite_height * 2;
 var chair = instance_create(-100, random_range(height, room_height - height), obj_chair);
 
 chairSpeed = max(chairSpeed - 1, 1);
@@ -69,30 +74,6 @@ chairSpeed = max(chairSpeed - 1, 1);
 if !gameOver {
     alarm[0] = chairSpeed;
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="5" enumb="88">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Exit the game
-game_end();
 </string>
           </argument>
         </arguments>
@@ -124,6 +105,123 @@ file_text_write_real(file, global.highScore);
         </arguments>
       </action>
     </event>
+    <event eventtype="9" enumb="88">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Exit the game
+game_end();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="80">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Pause/Unpause the game
+
+if (room == rm_game &amp;&amp; !gameOver) {
+    paused = !paused;
+}
+
+if paused {
+    audio_pause_sound(snd_music);
+    alarmTime = alarm[0];
+    
+    // Add Buttons
+    btnMainMenu = instance_create(room_width / 2, 400, obj_main_menu);
+    btnExit = instance_create(room_width / 2, 480, obj_exit);
+} else {
+    alarm[0] = alarmTime;
+    audio_resume_sound(snd_music);
+    obj_player.canMove = false;
+    obj_player.alarm[0] = 30;
+    with (btnMainMenu) instance_destroy();
+    with (btnExit) instance_destroy();
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="77">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Mute/Unmute all sounds
+
+mute = !mute;
+
+obj_mute.visible = mute;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="70">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>window_set_fullscreen(!window_get_fullscreen());
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="9" enumb="13">
       <action>
         <libid>1</libid>
@@ -141,10 +239,16 @@ file_text_write_real(file, global.highScore);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if room == rm_tutorial_1 {
-    room_goto(rm_tutorial_2);
-} else if room == rm_tutorial_2 {
-    room_goto(rm_game);
+            <string>switch (room) {
+    case rm_tutorial_1:
+        room_goto(rm_tutorial_2);
+        break;
+    case rm_tutorial_2:
+        room_goto(rm_tutorial_3);
+        break;
+    case rm_tutorial_3:
+        room_goto(rm_game);
+        break;
 }
 </string>
           </argument>
